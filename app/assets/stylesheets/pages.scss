@@ -1,0 +1,38 @@
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+@font-face {
+    font-family: "Metrolox Regular";
+    src: url("assets/fonts/METROLOX.ttf") format("truetype");
+ }
+
+ body {
+    font-family: 'Paytone One', sans-serif;
+ }
+.signup-button {
+    margin-bottom: 10px;
+}
+.signin-button {
+    margin-top: 10px;
+}
+.signup-button a {
+    padding:10px;
+    padding-left: 80px;
+    padding-right: 80px;
+    border: 2px solid rgb(248, 112, 0);
+    color: rgb(248, 112, 0);
+    border-radius: 5px;
+    text-decoration: none;
+}
+.signin-button a {
+    padding:10px;
+    padding-left: 80px;
+    padding-right: 80px;
+    color: white;
+    background-color: rgb(248, 112, 0);
+    border-radius: 5px;
+    text-decoration: none; 
+}
+h1, h2, h3,h4,h5, p {
+    font-family: 'Paytone One', sans-serif;
+}
