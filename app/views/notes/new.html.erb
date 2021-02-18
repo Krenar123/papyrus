@@ -1,0 +1,184 @@
+
+<div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-1 d-none d-md-block bg-light sidebar" style="min-height:100vh;">
+          <div class="sidebar-sticky" style="height:50%;">
+            <main class="text-center" style="height:100%; margin-top:200px; background: #fb6544; border-radius:25px;"> 
+                <div class="btn-group" style="height:100%;">
+                    <div class="btn-group-vertical default-color" role="group" aria-label="Vertical button group">
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!" onclick="init()" ><span class="fas fa-pen-alt" style="color: white;"></span></button>
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!"><span class="fas fa-mouse-pointer" style="color: white;"></span></button>
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!"><span class="fas fa-eraser" style="color: white;"></span></button>
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!"><span class="fas fa-sticky-note" style="color: white;"></span></button>
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!"><span class="fas fa-image" style="color: white;"></span></button>
+                        <button type="button" class="btn btn-blue" data-toggle="tooltip" data-animation="false" data-placement="right" title="Hooray!"><span class="fas fa-paragraph" style="color: white;" ></span></button>
+                        <%= link_to user_managment_path(current_user), class: "btn btn-blue", "data-toggle": "tooltip", "data-animation": "false", "data-placement": "right", "title": "Go back" do %>
+                            <span class="fas fa-arrow-alt-circle-left" style="color: white;"></span>
+                        <% end %>
+                    </div>
+                </div>
+            </main>
+          </div>
+        </nav>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').hover(function(){
+                    $('.tooltip-inner').css('margin-right', '50px');
+                    $('.tooltip-inner').css({
+                    "margin-left": "43px",
+                    "height": "35px",
+                    "font-size": "1.08rem",
+                    "min-width": "100px"
+                    });
+                });
+            })
+        </script>
+        <main role="main" class="col-md-11 col-lg-11 px-4"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-4 mb-3" style="margin-top:1px; border-bottom:2px solid #6c757d;">
+            <%= form_with(model: @note, local: true) do |f| %>
+                <div class="form-group">
+                    <%= f.text_field :title, autofocus: true, autocomplete: "username", class: "form-control", placeholder: "Enter the note title...", style: "font-size:1.5rem; border-left:none; border-right:none; border-top:none;" %>
+                </div>
+            <% end %>
+            <div class="d-flex align-items-center" style="margin-right:20px;">
+                <div class="box">
+                    <article class="media">
+                        <figure class="media-left" style="margin-bottom:0;">
+                            <p class="image" style="width:62px; margin-bottom:0;">
+                                <img src="https://bulma.io/images/placeholders/128x128.png" style="width:62px; border-radius:50%;">
+                            </p>
+                        </figure>
+                    </article>
+                </div>
+                <code style="margin-left:5px; margin-right:5px;"> · <%= current_user.username %> · </code> 
+            </div>
+        	</div>
+		  
+		  	<div class="row" style="padding-left:12px; padding-right:12px;">
+		    <div class="col-md-12" id="wind" style="display: block;background: #f8f9fa; border-top-left-radius:10px; border-top-right-radius:10px; width:100%; height: 600px;" >
+                <canvas width="1200" height="500" id="canvas" style="">
+                </canvas>
+		    </div>
+			</div>
+        </main>
+    </div>
+</div>
+<script>
+	var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "black",
+        y = 2;
+    
+    function init() {
+		canvas = document.getElementById('canvas');
+		canvas.setAttribute('width', $("#wind").innerWidth());
+		canvas.setAttribute('height', $("#wind").innerHeight());
+		ctx = canvas.getContext("2d");
+        w = canvas.width;
+        h = canvas.height;
+    
+        canvas.addEventListener("mousemove", function (e) {
+            findxy('move', e)
+        }, false);
+        canvas.addEventListener("mousedown", function (e) {
+            findxy('down', e)
+        }, false);
+        canvas.addEventListener("mouseup", function (e) {
+            findxy('up', e)
+        }, false);
+        canvas.addEventListener("mouseout", function (e) {
+            findxy('out', e)
+        }, false);
+    }
+    
+    function color(obj) {
+        switch (obj.id) {
+            case "green":
+                x = "green";
+                break;
+            case "blue":
+                x = "blue";
+                break;
+            case "red":
+                x = "red";
+                break;
+            case "yellow":
+                x = "yellow";
+                break;
+            case "orange":
+                x = "orange";
+                break;
+            case "black":
+                x = "black";
+                break;
+            case "white":
+                x = "white";
+                break;
+        }
+        if (x == "white") y = 14;
+        else y = 2;
+    
+    }
+    
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+    
+    function erase() {
+        var m = confirm("Want to clear");
+        if (m) {
+            ctx.clearRect(0, 0, w, h);
+            document.getElementById("canvasimg").style.display = "none";
+        }
+    }
+    
+    function save() {
+        document.getElementById("canvasimg").style.border = "2px solid";
+        var dataURL = canvas.toDataURL();
+        document.getElementById("canvasimg").src = dataURL;
+        document.getElementById("canvasimg").style.display = "inline";
+    }
+    
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+    
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+		}
+	}
+</script>

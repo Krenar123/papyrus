@@ -2,4 +2,9 @@
   <a class="navbar-brand" href="#">
     <%= image_tag "papyrus_logo.png", width: '280', height: '100', alt:"", loading:"lazy" %>
   </a>
+  <% if user_signed_in? %>
+    <div class="btn smooth-orange" style="margin-right:10px;">
+      <%= link_to('Logout', destroy_user_session_path, :method => :delete, style: 'color:white; text-decoration:none;') %>     
+    </div>
+  <% end %>
 </nav>

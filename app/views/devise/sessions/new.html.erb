@@ -1,0 +1,27 @@
+<%= render 'shared/header' %>
+<div class="container" style="margin-top:60px;">
+  <div class="row justify-content-center" style="min-height:500px;">
+    <div class="col-6">
+      <h2 class="text-center" style="margin-bottom:10px;">Log In</h2>
+      <p class="form-text text-muted text-center" style="margin-bottom:40px;">Login to your account and have fun working.</p>
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-group">
+          <label for="exampleInputEmail1" style="margin-bottom: 5px;">Email address</label>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id:"exampleInputEmail1",style:"margin-bottom: 10px;" %>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputPassword1" style="margin-bottom: 5px;">Password</label>
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "new-password", class:"form-control", id:"exampleInputPassword1",style:"margin-bottom: 10px;" %>
+        </div>
+        <%= f.submit "Sign In", class: "btn smooth-orange", style: 'margin-top:10px;' %>
+      <% end %>
+
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
